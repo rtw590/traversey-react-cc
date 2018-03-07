@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import uuid from 'uuid';
+import PropTypes from 'prop-types'
 
 
 class AddProject extends Component {
@@ -18,6 +20,7 @@ class AddProject extends Component {
         alert('title is required');
       } else {
         this.setState({newProject:{
+            id: uuid.v4(),
             title: this.refs.title.value,
             category: this.refs.category.value
         }}, function(){
@@ -30,7 +33,7 @@ class AddProject extends Component {
 
   render() {
     let categoryOptions = this.props.categories.map(category => {
-        return <option key={category} value="category">{category}</option>
+        return <option key={category} value={category}>{category}</option>
     });
     return (
       <div>
@@ -46,11 +49,17 @@ class AddProject extends Component {
                     {categoryOptions}
                 </select>
             </div>
+            <br />
             <input type="submit" value="submit" />
         </form>
       </div>
     );
   }
 }
+
+AddProject.propTypes = {
+    categories: PropTypes.array,
+    addProject: PropTypes.func
+  }
 
 export default AddProject;
